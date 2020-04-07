@@ -1,3 +1,4 @@
+import scorer
 import json
 import csv
 import argparse
@@ -73,26 +74,6 @@ def compute_score(args, proj, item):
     return jt_score + ind_score + nearest_score
 
 
-def main(args):
-    items = load_data(args)
-    project = load_project(args)
-
-    processed = list()
-    for item in items:
-        if not is_within_100(project, item):
-            print(f"Excluding participant {item['firstname']} > 100 km")
-            continue
-
-        score = compute_score(args, project, item)
-        item['score'] = score
-        processed.append(item)
-
-    for idx, item in enumerate(sorted(processed, key=lambda x: x['score'], reverse=True)):
-        print(item)
-        if idx == (args.limit-1):
-            break
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--data', default='participants.csv',
@@ -109,4 +90,23 @@ if __name__ == "__main__":
     parser.add_argument('--industry-weight', default=0.30, type=float,
                         help='Industry Type Weight')
     args = parser.parse_args()
-    main(args)
+
+    scorer = scorer.Scorer(**args.__dict__)
+
+    # items = load_data(args)
+    # project = load_project(args)
+
+    # processed = list()
+    # for item in items:
+    #     if not is_within_100(project, item):
+    #         print(f"Excluding participant {item['firstname']} > 100 km")
+    #         continue
+
+    #     score = compute_score(args, project, item)
+    #     item['score'] = score
+    #     processed.append(item)
+
+    # for idx, item in enumerate(sorted(processed, key=lambda x: x['score'], reverse=True)):
+    #     print(item)
+    #     if idx == (args.limit-1):
+    #         break

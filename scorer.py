@@ -6,14 +6,40 @@ from statistics import mean
 import difflib
 
 
+class Project:
+    def __init__(self, *args, **kwargs):
+        self.numberOfParticipants = kwargs['numberOfParticipants']
+        self.timezone = kwargs['timezone']
+        self.locations = []
+        self.name = kwargs['name']
+        self.professionalJobTitles = kwargs['professionalJobTitles']
+        self.professionalIndustry = kwargs['professionalIndustry']
+        self.education = kwargs['education']
+
+
+class Participant:
+    def __init__(self, *args, **kwargs):
+        # import pdb; pdb.set_trace()
+        self.firstName = kwargs['firstName']
+        self.gender = kwargs['gender']
+        self.jobTitle = kwargs['jobTitle']
+        self.industry = kwargs['industry']
+        self.city = kwargs['city']
+        self.latitude = kwargs['latitude']
+        self.longitude = kwargs['longitude']
+
+
 class Scorer:
 
-    def __init__(self, args):
-        self.args = args
+    def __init__(self, *args, **kwargs):
+        self.kwargs = kwargs
 
-    def load_project(self):
-        with open(self.args.proj, 'rt') as fp:
-            return json.load(fp)
+        self.participants = []
+        self.project = None
+
+    def loadProject(self):
+        with open(self.kwargs['proj'], 'rt') as fp:
+            self.project = Project(**json.load(fp))
 
     def compute_distance(self, loc1, loc2):
         # Earth radius=
@@ -34,17 +60,16 @@ class Scorer:
 
         return distance
 
-    def load_participants(self):
-        with open(self.args.data, 'rt') as fp1:
+    def loadParticipants(self):
+        with open(self.kwargs['data'], 'rt') as fp1:
             reader = csv.reader(fp1)
-            self.participants = list()
 
             for idx, row in enumerate(reader):
                 if idx == 0:
-                    header = [r.lower() for r in row]
+                    header = [r for r in row]
                     continue
                 item = {}
                 for x, y in zip(header, row):
                     item[x] = y
 
-                self.participants.append(item)
+                self.participants.append(Participant(**item))

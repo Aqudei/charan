@@ -1,13 +1,26 @@
 import unittest
-import score
+from scorer import Scorer
 
 
 class TestScorerMethods(unittest.TestCase):
-    # scorer = score.Scorer()
 
-    # def test_upper(self):
-    #     self.assertEqual('foo'.upper(), 'FOO')
+    def test_canLoadParticipants(self):
+        scorerObj = Scorer(data="participants.csv")
+        scorerObj.loadParticipants()
 
+        self.assertTrue(len(scorerObj.participants) > 0)
+
+    def test_canLoadProject(self):
+        scorerObj = Scorer(data="participants.csv", proj='project.json')
+        scorerObj.loadProject()
+        self.assertIsNotNone(scorerObj.project)
+
+    def test_canReadProject(self):
+        scorerObj = Scorer(data="participants.csv", proj='project.json')
+        scorerObj.loadProject()
+        self.assertIsNotNone(scorerObj.project)
+        self.assertTrue(scorerObj.project.name ==
+                        'Looking for software engineers experienced with Kafka')
     # def test_isupper(self):
     #     self.assertTrue('FOO'.isupper())
     #     self.assertFalse('Foo'.isupper())
