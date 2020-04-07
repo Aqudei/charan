@@ -1,4 +1,3 @@
-import openpyxl
 import json
 import csv
 import argparse
@@ -103,11 +102,11 @@ if __name__ == "__main__":
     parser.add_argument('--mode', default='average')
     parser.add_argument('--limit', default=5, type=int,
                         help='Display result limit')
-    parser.add_argument('--loc-weight', default=40, type=int,
+    parser.add_argument('--loc-weight', default=0.40, type=float,
                         help='Location distance weight')
-    parser.add_argument('--job-weight', default=30, type=int,
+    parser.add_argument('--job-weight', default=0.30, type=float,
                         help='Job Title Weight')
-    parser.add_argument('--industry-weight', default=30, type=int,
+    parser.add_argument('--industry-weight', default=0.30, type=float,
                         help='Industry Type Weight')
     args = parser.parse_args()
     main(args)
