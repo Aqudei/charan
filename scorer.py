@@ -18,8 +18,8 @@ class Project:
         self.locations = list([c['location']['location']
                                for c in kwargs['cities']])
 
-        def __str__(self):
-            return self.name
+    def __str__(self):
+        return self.name
 
 
 class Participant:
