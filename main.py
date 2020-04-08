@@ -92,7 +92,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     scorer = scorer.Scorer(**args.__dict__)
-
+    scorer.run()
+    
     # items = load_data(args)
     # project = load_project(args)
 

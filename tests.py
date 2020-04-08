@@ -21,6 +21,16 @@ class TestScorerMethods(unittest.TestCase):
         self.assertIsNotNone(scorerObj.project)
         self.assertTrue(scorerObj.project.name ==
                         'Looking for software engineers experienced with Kafka')
+
+    def test_samePointHasZeroDistance(self):
+        loc = {
+            "latitude": 40.7127753,
+            "longitude": -74.0059728
+        }
+
+        scorerObj = Scorer(data="participants.csv", proj='project.json')
+        self.assertTrue(scorerObj.computeDistance(loc, loc) == 0)
+
     # def test_isupper(self):
     #     self.assertTrue('FOO'.isupper())
     #     self.assertFalse('Foo'.isupper())
