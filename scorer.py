@@ -94,7 +94,11 @@ class Scorer:
 
     def isWithin100(self, proj, item):
         nearest = self.computeNearestFromProject(item)
+        if nearest > 100:
+            print(f"Excluding participant: {item.firstName}, location > 100 km.")
         return nearest <= 100
+        
+        
 
     def computeScore(self, participant):
         func = mean if self.kwargs['mode'] == 'average' else max
